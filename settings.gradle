@@ -1,0 +1,8 @@
+include ':domain'
+include ':kinject'
+include ':logger'
+include ':multicore'
+
+rootProject.name = 'KChatShared'
+
+enableFeaturePreview('GRADLE_METADATA')

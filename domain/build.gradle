@@ -1,0 +1,152 @@
+def kotlinPluginId = 'kotlin-multiplatform'
+final hasPlugin = project.getPlugins().hasPlugin(kotlinPluginId);
+if (hasPlugin) {
+    final Plugin plugin = project.getPlugins().getPlugin(kotlinPluginId)
+    println 'Plugin already applied - version ' + plugin.properties['kotlinPluginVersion']
+} else {
+    apply plugin: "kotlin-multiplatform"
+}
+
+//apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlinx-serialization'
+apply plugin: 'maven-publish'
+
+//buildscript {
+//    repositories {
+//        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+//        maven { url "https://maven.pkg.github.com/chrynan/inject" }
+//    }
+//}
+
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+}
+
+kotlin {
+    jvm()
+    // This is for iPhone simulator
+    // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
+//    iosX64("ios") {
+//        binaries {
+//            framework()
+//        }
+//    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                api 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7"
+
+                //implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0"
+                api project(':kinject')
+            }
+        }
+        commonTest {
+            dependencies {
+                api 'org.jetbrains.kotlin:kotlin-test-common'
+                api 'org.jetbrains.kotlin:kotlin-test-annotations-common'
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5"
+            }
+        }
+        jvmMain {
+            dependencies {
+                api "org.jetbrains.kotlin:kotlin-stdlib:1.3.72"
+                api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
+
+                //api("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+
+                api 'com.jakewharton.threetenabp:threetenabp:1.2.2'
+                api 'com.google.dagger:dagger:2.27'
+               // kapt "com.google.dagger:dagger-compiler:2.27"
+            }
+        }
+        jvmTest {
+            dependencies {
+                api 'org.jetbrains.kotlin:kotlin-test'
+                api 'org.jetbrains.kotlin:kotlin-test-junit'
+                api "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+                api "org.mockito:mockito-core:3.3.3"
+                //api "org.assertj:assertj-core:3.15.2"
+                api "junit:junit:4.12"
+            }
+        }
+//        iosMain {
+//            dependencies {
+//                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0"
+//                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.7"
+//            }
+//        }
+//        iosTest {
+//        }
+//        jsMain {
+//            dependencies {
+//                implementation kotlin('stdlib-js')
+//            }
+//        }
+//        jsTest {
+//            dependencies {
+//                implementation kotlin('test-js')
+//            }
+//        }
+//        macosMain {
+//        }
+//        macosTest {
+//        }
+    }
+}
+
+// This task attaches native framework built from ios module to Xcode project
+// (see iosApp directory). Don't run this task directly,
+// Xcode runs this task itself during its build process.
+// Before opening the project from iosApp directory in Xcode,
+// make sure all Gradle infrastructure exists (gradle.wrapper, gradlew).
+//task copyFramework {
+//    def buildType = project.findProperty('kotlin.build.type') ?: 'DEBUG'
+//    def target = project.findProperty('kotlin.target') ?: 'ios'
+//    dependsOn kotlin.targets."$target".binaries.getFramework(buildType).linkTask
+//
+//    doLast {
+//        def srcFile = kotlin.targets."$target".binaries.getFramework(buildType).outputFile
+//        def targetDir = getProperty('configuration.build.dir')
+//        copy {
+//            from srcFile.parent
+//            into targetDir
+//            include 'common.framework/**'
+//            include 'common.framework.dSYM'
+//        }
+//    }
+//}
+
+//tasks.register("copyFramework") {
+//    val buildType = project.findProperty("kotlin.build.type") as? String ?: "DEBUG"
+//    dependsOn("link${buildType.toLowerCase().capitalize()}FrameworkIos")
+//
+//    doLast {
+//        val srcFile = (kotlin.targets["ios"] as KotlinNativeTarget).binaries.getFramework(buildType).outputFile
+//        val targetDir = project.property("configuration.build.dir")!!
+//                copy {
+//                    from(srcFile.parent)
+//                    into(targetDir)
+//                    include( "greeting.framework/**")
+//                    include("greeting.framework.dSYM")
+//                }
+//    }
+//}
+//
+//tasks.register("iosTest")  {
+//    val  device = project.findProperty("iosDevice") as? String ?: "iPhone 8"
+//    dependsOn("linkDebugTestIos")
+//    group = JavaBasePlugin.VERIFICATION_GROUP
+//    description = "Runs tests for target 'ios' on an iOS simulator"
+//
+//    doLast {
+//        val  binary = (kotlin.targets["ios"] as KotlinNativeTarget).binaries.getTest("DEBUG").outputFile
+//        exec {
+//            commandLine("xcrun", "simctl", "spawn", "--standalone", device, binary.absolutePath)
+//        }
+//    }
+//}
