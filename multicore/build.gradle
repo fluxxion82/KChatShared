@@ -10,7 +10,8 @@ if (hasPlugin) {
 repositories {
     mavenCentral()
 }
-group 'com.example'
+
+group 'ai.sterling.kchat'
 version '0.0.1'
 
 apply plugin: 'maven-publish'
@@ -19,9 +20,38 @@ kotlin {
     jvm()
     // This is for iPhone simulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
-    iosX64("ios") {
-        binaries {
-            framework()
+//    iosX64("ios") {
+//        binaries {
+//            framework()
+//        }
+//    }
+    targets {
+        //fromPreset(presets.android, 'android')
+
+
+//        def iosPreset = presets.iosX64
+//        fromPreset(iosPreset, 'ios') {
+//            binaries {
+//                framework {
+//                    // Disable bitcode embedding for the simulator build.
+//                    if (iosPreset == presets.iosX64) {
+//                        embedBitcode("disable")
+//                    }
+//                }
+//            }
+//            //compilations.main.outputKinds('FRAMEWORK')
+//            compilations.each {
+//                //it.extraOpts("-linkerOpts", "-lsqlite3")
+//            }
+//        }
+
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'ios') {
+            binaries {
+                framework('multicore')
+            }
         }
     }
     sourceSets {
@@ -47,6 +77,13 @@ kotlin {
                 implementation 'org.jetbrains.kotlin:kotlin-test-junit'
             }
         }
+        iosMain {
+            dependencies {
+                //implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native'
+            }
+        }
+        iosTest {
+        }
 //        jsMain {
 //            dependencies {
 //                implementation kotlin('stdlib-js')
@@ -57,17 +94,30 @@ kotlin {
 //                implementation kotlin('test-js')
 //            }
 //        }
-//        macosMain {
-//        }
-//        macosTest {
-//        }
-        iosMain {
-        }
-        iosTest {
-        }
     }
 }
 
 configurations {
     compileClasspath
 }
+
+task packForXcode(type: Sync) {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+    final def framework = kotlin.targets.ios.binaries.getFramework("multicore", mode)
+
+    inputs.property "mode", mode
+    dependsOn framework.linkTask
+
+    from { framework.outputFile.parentFile }
+    into frameworkDir
+
+    doLast {
+        new File(frameworkDir, 'gradlew').with {
+            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+            setExecutable(true)
+        }
+    }
+}
+
+tasks.build.dependsOn packForXcode

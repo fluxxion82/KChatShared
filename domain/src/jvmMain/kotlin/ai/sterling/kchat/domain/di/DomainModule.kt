@@ -6,10 +6,12 @@ import ai.sterling.kchat.domain.base.CoroutineScopeFacade
 import ai.sterling.kchat.domain.base.CoroutinesContextFacade
 import ai.sterling.kchat.domain.base.DefaultContextFacade
 import ai.sterling.kchat.domain.base.DefaultScopeFacade
+import ai.sterling.kchat.domain.user.persistences.InMemoryUserEventsPersistence
+import ai.sterling.kchat.domain.user.persistences.UserEventsPersistence
+import com.soywiz.klock.TimeProvider
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import org.threeten.bp.Clock
 
 @Module
 abstract class DomainModule {
@@ -19,7 +21,7 @@ abstract class DomainModule {
 
         @Provides
         @JvmStatic
-        fun clock() = Clock.systemDefaultZone()
+        fun clock() = TimeProvider.now()
     }
 
     @Binds
@@ -30,4 +32,7 @@ abstract class DomainModule {
 
     @Binds
     internal abstract fun foregroundEvent(implementation: InMemoryForegroundEventPersistence): ForegroundEventPersistence
+
+    @Binds
+    internal abstract fun userEvents(implementation: InMemoryUserEventsPersistence): UserEventsPersistence
 }

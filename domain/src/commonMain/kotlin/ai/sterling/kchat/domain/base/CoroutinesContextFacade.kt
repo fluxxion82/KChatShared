@@ -14,7 +14,7 @@ interface CoroutinesContextFacade {
 
 internal class DefaultContextFacade @Inject constructor() :
     CoroutinesContextFacade {
-    override val io = Dispatchers.Unconfined // Dispathers.IO ??
+    override val io = Dispatchers.Default // Dispathers.IO ??
     override val main = Dispatchers.Main
     override val default = Dispatchers.Default
     override val errorHandler = CoroutineExceptionHandler { _, error ->

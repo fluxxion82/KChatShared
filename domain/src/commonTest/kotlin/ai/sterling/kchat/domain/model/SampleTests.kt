@@ -1,6 +1,6 @@
 package ai.sterling.kchat.domain.model
 
-import ai.sterling.kchat.domain.model.Sample
+import ai.sterling.kchat.domain.Sample
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
