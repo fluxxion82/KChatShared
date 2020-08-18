@@ -1,3 +1,3 @@
 package ai.sterling.kchat.kinject
 
-actual typealias Provider<T> = ArrayList<T>
+actual typealias Provider<T> = cocoapods.Cleanse.Assisted<T>

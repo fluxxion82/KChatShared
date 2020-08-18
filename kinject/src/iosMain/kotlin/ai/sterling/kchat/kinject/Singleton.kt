@@ -1,20 +1,23 @@
 package ai.sterling.kchat.kinject
 
-import ai.sterling.kinject.ChatMessage
-import org.kodein.di.Kodein
-import org.kodein.di.TypeToken
-import org.kodein.di.bindings.NoArgSimpleBindingKodein
-import org.kodein.di.bindings.RefMaker
-import org.kodein.di.bindings.Scope
-import org.kodein.di.bindings.Singleton
-import org.kodein.di.erased
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.singleton
+actual class Singleton = String()
 
-actual class Singleton() = String
-
-val kodein = Kodein {
-    bind<ChatMessage>() with singleton {
-        NoArgSimpleBindingKodein
-    }
-}
+//fun getAndShow(url: String, contentView: UITextView) {
+//    val manager = AFHTTPSessionManager()
+//    manager.responseSerializer = AFHTTPResponseSerializer()
+//    val onSuccess = { _: NSURLSessionDataTask?, response: Any? ->
+//        val html = NSAttributedString.create(
+//            data = response as NSData,
+//            options = mapOf(NSDocumentTypeDocumentAttribute as Any? to NSHTMLTextDocumentType),
+//            documentAttributes = null,
+//            error = null
+//        )!!
+//        contentView.attributedText = html
+//    }
+//    val onError = { _: NSURLSessionDataTask?, error: NSError? ->
+//        NSLog("Cannot get ${url}.")
+//        NSLog(error.toString())
+//    }
+//
+//    manager.GET(url, null, onSuccess, onError)
+//}

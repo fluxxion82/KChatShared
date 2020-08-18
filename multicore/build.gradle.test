@@ -1,0 +1,168 @@
+//import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
+def kotlinPluginId = 'kotlin-multiplatform'
+final hasPlugin = project.getPlugins().hasPlugin(kotlinPluginId);
+if (hasPlugin) {
+    final Plugin plugin = project.getPlugins().getPlugin(kotlinPluginId)
+    println 'Plugin already applied - version ' + plugin.properties['kotlinPluginVersion']
+} else {
+    apply plugin: "kotlin-multiplatform"
+}
+
+repositories {
+    jcenter()
+    maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+    maven { url "https://kotlin.bintray.com/native-xcode" }
+}
+
+group 'ai.sterling.kchat'
+version '0.0.1'
+
+//apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
+//apply plugin: 'kotlin-platform-native'
+
+kotlin {
+    jvm()
+
+    // This is for iPhone simulator
+    // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
+//    iosX64("ios") {
+//        binaries {
+//            framework()
+//        }
+//    }
+    targets {
+        //fromPreset(presets.android, 'android')
+
+
+//        def iosPreset = presets.iosX64
+//        fromPreset(iosPreset, 'ios') {
+//            binaries {
+//                framework {
+//                    // Disable bitcode embedding for the simulator build.
+//                    if (iosPreset == presets.iosX64) {
+//                        embedBitcode("disable")
+//                    }
+//                }
+//            }
+//            //compilations.main.outputKinds('FRAMEWORK')
+//            compilations.each {
+//                //it.extraOpts("-linkerOpts", "-lsqlite3")
+//            }
+//        }
+
+//        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+//                              ? presets.iosArm64 : presets.iosX64
+//
+//        fromPreset(iOSTarget, 'ios') {
+//            binaries {
+//                framework('multicore')
+//            }
+//        }
+    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-test-common'
+                implementation 'org.jetbrains.kotlin:kotlin-test-annotations-common'
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-test'
+                implementation 'org.jetbrains.kotlin:kotlin-test-junit'
+            }
+        }
+//        iOS64Main {
+//            dependsOn(iosMain)
+//        }
+//        iOS32Main {
+//            dependsOn(iosMain)
+//        }
+//        configure([iosArm32Main, iosArm64Main]) {
+//            dependsOn iosMain
+//        }
+//        configure([iosArm32Test, iosArm64Test]) {
+//            dependsOn iosTest
+//        }
+        iosMain {
+            dependencies {
+                //implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native'
+                implementation 'org.jetbrains.kotlin.native.xcode:kotlin-native-xcode-11-4-workaround:1.3.72.0'
+            }
+        }
+        iosTest {
+        }
+//        jsMain {
+//            dependencies {
+//                implementation kotlin('stdlib-js')
+//            }
+//        }
+//        jsTest {
+//            dependencies {
+//                implementation kotlin('test-js')
+//            }
+//        }
+    }
+
+    def buildForDevice = project.findProperty("kotlin.native.cocoapods.target") == "ios_arm"
+
+//    iOSMain.dependencies {
+//        implementation("org.jetbrains.kotlin.native.xcode:kotlin-native-xcode-11-4-workaround:1.3.72.0")
+//    }
+    if (buildForDevice) {
+        iosArm64("iOS64")
+        iosArm32("iOS32")
+
+        sourceSets["iOS64Main"].dependsOn(iOSMain)
+        sourceSets["iOS32Main"].dependsOn(iOSMain)
+    } else {
+        iosX64("iOS")
+    }
+
+    cocoapods {
+        // The CocoaPods version notation is supported.
+        // The dependency will be added to all macOS and iOS targets.
+        summary = "Shared Kotlin/Native module"
+        homepage = "Link to a Kotlin/Native module homepage"
+        //pod("Cleanse", "~> 4.2.5")
+        pod("AFNetworking", "~> 3.2.0")
+    }
+}
+
+configurations {
+    compileClasspath
+}
+
+//task packForXcode(type: Sync) {
+//    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+//    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+//    final def framework = kotlin.targets.ios.binaries.getFramework("multicore", mode)
+//
+//    inputs.property "mode", mode
+//    dependsOn framework.linkTask
+//
+//    from { framework.outputFile.parentFile }
+//    into frameworkDir
+//
+//    doLast {
+//        new File(frameworkDir, 'gradlew').with {
+//            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+//            setExecutable(true)
+//        }
+//    }
+//}
+//
+//tasks.build.dependsOn packForXcode

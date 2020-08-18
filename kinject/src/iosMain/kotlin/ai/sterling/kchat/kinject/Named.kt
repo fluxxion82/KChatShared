@@ -1,3 +1,3 @@
 package ai.sterling.kchat.kinject
 
-actual typealias Named = String
+actual typealias Named = cocoapods.Cleanse.TaggedProvider

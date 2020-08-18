@@ -5,7 +5,7 @@ import ai.sterling.kchat.domain.base.Usecase
 import ai.sterling.kchat.domain.chat.model.ChatMessage
 import ai.sterling.kchat.domain.chat.repository.ChatRespository
 import ai.sterling.kinject.Inject
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ class GetChatMessages @Inject constructor(
 ) : Usecase<Unit, ReceiveChannel<List<ChatMessage>>> {
 
     override suspend fun invoke(param: Unit): ReceiveChannel<List<ChatMessage>> {
-        val broadcastChannel = ConflatedBroadcastChannel<List<ChatMessage>>()
+        val broadcastChannel = BroadcastChannel<List<ChatMessage>>(1)
         contextScope.globalScope.launch {
             chatRepository.getChatMessages().consumeEach {
                 println("chat messages from repo, size: ${it.size}")

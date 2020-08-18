@@ -1,3 +1,3 @@
 package ai.sterling.kchat.kinject
 
-actual typealias Qualifier = String
+actual typealias Qualifier = cocoapods.Cleanse.Tag

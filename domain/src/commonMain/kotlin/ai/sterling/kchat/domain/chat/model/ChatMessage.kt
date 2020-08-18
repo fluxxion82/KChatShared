@@ -6,7 +6,7 @@ import com.soywiz.klock.format
 data class ChatMessage(val id: Int, val username: String, val type: Int, var message: String, val date: Long) {
 
     override fun toString(): String {
-        var msg = when (type) {
+        return when (type) {
             LOGIN -> {
                 message = "$username just joined \n"
                 message
@@ -26,8 +26,6 @@ data class ChatMessage(val id: Int, val username: String, val type: Int, var mes
 
             else -> "Invalid operation.\n"
         }
-
-        return msg
     }
 
     companion object {

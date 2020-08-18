@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    fun login(param: LoginUser.LoginData): Flow<AppUser.LoggedIn>
+    fun login(param: LoginUser.LoginData): Flow<AppUser>
 
-    fun signup(param: SignUpUser.SignUpnData): Flow<AppUser.LoggedIn>
+    fun signup(param: SignUpUser.SignUpnData): Flow<AppUser>
 
     suspend fun disconnect()
 
