@@ -1,6 +1,10 @@
+//import Deps.cocoapodsext
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.kotlin.native.cocoapods")
+    //id("co.touchlab.native.cocoapods")
 }
 
 repositories {
@@ -59,12 +63,17 @@ kotlin {
         implementation("org.jetbrains.kotlin:kotlin-test-junit")
     }
 
-    cocoapods {
-        // Configure fields required by CocoaPods.
-        summary = "Working with AFNetworking from Kotlin/Native using CocoaPods"
-        homepage = "https://github.com/JetBrains/kotlin-native"
-
-        // Configure a dependency on AFNetworking. It will be added in all macOS and iOS targets.
-        pod("AFNetworking", "~> 3.2.0")
-    }
+//    cocoapodsext {
+//        // Configure fields required by CocoaPods.
+//        summary = "Working with AFNetworking from Kotlin/Native using CocoaPods"
+//        homepage = "https://github.com/JetBrains/kotlin-native"
+//
+//        // Configure a dependency on AFNetworking. It will be added in all macOS and iOS targets.
+//        pod("AFNetworking", "~> 3.2.0")
+//
+//        framework {
+//            isStatic = false
+//            transitiveExport = true
+//        }
+//    }
 }

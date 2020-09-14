@@ -1,7 +1,7 @@
 object Libs {
-    private const val kotlinVersion = "1.3.61"
+    private const val kotlinVersion = "1.4.10"
     private const val lifecycleVersion = "2.2.0-alpha01"
-    private const val daggerVersion = "2.25.2"
+    private const val daggerVersion = "2.28.3"
     private const val retrofitVersion = "2.6.1"
     private const val navVersion = "2.1.0"
     private const val coroutinesVersion = "1.3.2"
