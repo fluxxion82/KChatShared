@@ -8,21 +8,11 @@ import ai.sterling.kchat.domain.base.DefaultContextFacade
 import ai.sterling.kchat.domain.base.DefaultScopeFacade
 import ai.sterling.kchat.domain.user.persistences.InMemoryUserEventsPersistence
 import ai.sterling.kchat.domain.user.persistences.UserEventsPersistence
-import com.soywiz.klock.TimeProvider
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
 abstract class DomainModule {
-
-    @Module
-    companion object {
-
-        @Provides
-        @JvmStatic
-        fun clock() = TimeProvider.now()
-    }
 
     @Binds
     internal abstract fun dispatchersFacade(implementation: DefaultContextFacade): CoroutinesContextFacade

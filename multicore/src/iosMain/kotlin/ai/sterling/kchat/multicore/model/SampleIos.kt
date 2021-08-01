@@ -33,5 +33,9 @@ fun getAndShow(url: String, contentView: UITextView) {
         NSLog(error.toString())
     }
 
-    manager.GET(url, null, onSuccess, onError)
+    val onProgress = { prog: NSProgress? ->
+        NSLog("progress $prog.")
+    }
+
+    manager.GET(url, null, null, onProgress, onSuccess, onError)
 }

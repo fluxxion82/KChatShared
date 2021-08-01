@@ -1,7 +1,6 @@
 package ai.sterling.kchat.domain.chat.model
 
-import com.soywiz.klock.DateFormat
-import com.soywiz.klock.format
+import kotlinx.datetime.Instant
 
 data class ChatMessage(val id: Int, val username: String, val type: Int, var message: String, val date: Long) {
 
@@ -19,8 +18,8 @@ data class ChatMessage(val id: Int, val username: String, val type: Int, var mes
 
             REPLY, MESSAGE -> {
                 // this is different from the android client
-                val simpleDateFormat = DateFormat("HH:mm:ss")
-                val time = simpleDateFormat.format(date)
+                //val simpleDateFormat = DateFormat("HH:mm:ss")
+                val time = Instant.fromEpochMilliseconds(date).toString()
                 "$time $username: $message \n"
             }
 

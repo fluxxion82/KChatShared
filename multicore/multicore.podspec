@@ -1,25 +1,25 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'multicore'
     spec.version                  = '0.0.1'
-    spec.homepage                 = ''
+    spec.homepage                 = 'https://github.com/JetBrains/kotlin-native'
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = ''
+    spec.summary                  = 'Working with AFNetworking from Kotlin/Native using CocoaPods'
 
     spec.static_framework         = true
     spec.vendored_frameworks      = "build/cocoapods/framework/multicore.framework"
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
 
-                
+    spec.ios.deployment_target = '13.5'
 
-                
+    spec.dependency 'AFNetworking', '~> 4.0.0'
 
     spec.pod_target_xcconfig = {
         'KOTLIN_TARGET[sdk=iphonesimulator*]' => 'ios_x64',
         'KOTLIN_TARGET[sdk=iphoneos*]' => 'ios_arm',
-        'KOTLIN_TARGET[sdk=watchsimulator*]' => 'watchos_x86',
+        'KOTLIN_TARGET[sdk=watchsimulator*]' => 'watchos_x64',
         'KOTLIN_TARGET[sdk=watchos*]' => 'watchos_arm',
         'KOTLIN_TARGET[sdk=appletvsimulator*]' => 'tvos_x64',
         'KOTLIN_TARGET[sdk=appletvos*]' => 'tvos_arm64',
