@@ -2,11 +2,11 @@ package ai.sterling.logging.jvm
 
 import ai.sterling.logging.Logger
 import java.util.logging.Level
+import java.util.logging.Logger as JavaLog
 
 object JvmLogger : Logger {
-    private val javaLogger = java.util.logging.Logger.getLogger(JvmLogger::class.qualifiedName)
+    private val anonLogger = JavaLog.getAnonymousLogger()
 
-    @Suppress("ComplexMethod")
     override fun log(
         priority: Logger.Priority,
         explicitTag: String?,
@@ -21,41 +21,33 @@ object JvmLogger : Logger {
         when (priority) {
             Logger.Priority.VERBOSE -> {
                 throwable?.let {
-                    javaLogger.log(Level.ALL, messageToLog, it)
-                } ?: javaLogger.log(Level.ALL, tagToLog, messageToLog)
+                    anonLogger.log(Level.ALL, messageToLog, arrayOf(tagToLog, it))
+                } ?: anonLogger.log(Level.ALL, messageToLog, tagToLog)
             }
             Logger.Priority.INFO -> {
                 throwable?.let {
-                    javaLogger.log(Level.INFO, messageToLog, it)
-                } ?: javaLogger.log(Level.INFO, tagToLog, messageToLog)
+                    anonLogger.log(Level.INFO, messageToLog, arrayOf(tagToLog, it))
+                } ?: anonLogger.log(Level.INFO, messageToLog, tagToLog)
             }
             Logger.Priority.DEBUG -> {
                 throwable?.let {
-                    javaLogger.log(Level.SEVERE, messageToLog, it)
-                } ?: javaLogger.log(Level.SEVERE, tagToLog, messageToLog)
+                    anonLogger.log(Level.CONFIG, messageToLog, arrayOf(tagToLog, it))
+                } ?: anonLogger.log(Level.CONFIG, messageToLog, tagToLog)
             }
             Logger.Priority.WARNING -> {
                 throwable?.let {
-                    if (message == null) {
-                        javaLogger.log(Level.WARNING, tagToLog, it)
-                    } else {
-                        javaLogger.log(Level.WARNING, messageToLog, it)
-                    }
-                } ?: javaLogger.log(Level.WARNING, tagToLog, messageToLog)
+                    anonLogger.log(Level.WARNING, messageToLog, arrayOf(tagToLog, it))
+                } ?: anonLogger.log(Level.WARNING, messageToLog, tagToLog)
             }
             Logger.Priority.ERROR -> {
                 throwable?.let {
-                    javaLogger.log(Level.SEVERE, messageToLog, it)
-                } ?: javaLogger.log(Level.SEVERE, tagToLog, messageToLog)
+                    anonLogger.log(Level.SEVERE, messageToLog, arrayOf(tagToLog, it))
+                } ?: anonLogger.log(Level.SEVERE, messageToLog, tagToLog)
             }
             Logger.Priority.WTF -> {
                 throwable?.let {
-                    if (message == null) {
-                        javaLogger.log(Level.WARNING, tagToLog, it)
-                    } else {
-                        javaLogger.log(Level.WARNING, messageToLog, it)
-                    }
-                } ?: javaLogger.log(Level.WARNING, tagToLog, messageToLog)
+                    anonLogger.log(Level.SEVERE, messageToLog, arrayOf(tagToLog, it))
+                } ?: anonLogger.log(Level.SEVERE, messageToLog, tagToLog)
             }
         }.let { }
     }

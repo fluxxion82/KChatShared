@@ -48,6 +48,15 @@ kotlin {
     sourceSets["jvmMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.10")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10")
+
+        implementation("com.google.dagger:hilt-core:2.37")
+//        configurations["kapt"].dependencies.add(
+//            org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
+//                "com.google.dagger",
+//                "hilt-android-compiler",
+//                "2.37"
+//            )
+//        )
     }
 
     sourceSets["jvmTest"].dependencies {
@@ -56,6 +65,12 @@ kotlin {
         implementation("org.mockito:mockito-core:3.9.0")
         implementation("org.assertj:assertj-core:3.16.1")
         implementation("org.jetbrains.kotlin:kotlin-test-junit:1.5.10")
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
@@ -70,5 +85,9 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }

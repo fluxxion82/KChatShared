@@ -7,12 +7,13 @@ import ai.sterling.kinject.Inject
 
 class UpdateServerInfo @Inject constructor(
     private val preferences: UserPreferences
-) : Usecase<ServerInfo, Unit> {
+) : Usecase<ServerInfo, Boolean> {
 
-    override suspend fun invoke(param: ServerInfo) {
+    override suspend fun invoke(param: ServerInfo): Boolean {
         if (param.username.isEmpty() || param.serverIP.isEmpty() || param.serverPort == 0) {
-            return
+            return false
         }
         preferences.upsert(param)
+        return true
     }
 }

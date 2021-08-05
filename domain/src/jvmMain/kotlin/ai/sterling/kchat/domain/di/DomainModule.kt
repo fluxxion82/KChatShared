@@ -6,6 +6,8 @@ import ai.sterling.kchat.domain.base.CoroutineScopeFacade
 import ai.sterling.kchat.domain.base.CoroutinesContextFacade
 import ai.sterling.kchat.domain.base.DefaultContextFacade
 import ai.sterling.kchat.domain.base.DefaultScopeFacade
+import ai.sterling.kchat.domain.chat.persistence.ChatEventPersistence
+import ai.sterling.kchat.domain.chat.persistence.InMemoryChatEventPersistence
 import ai.sterling.kchat.domain.user.persistences.InMemoryUserEventsPersistence
 import ai.sterling.kchat.domain.user.persistences.UserEventsPersistence
 import dagger.Binds
@@ -25,4 +27,7 @@ abstract class DomainModule {
 
     @Binds
     internal abstract fun userEvents(implementation: InMemoryUserEventsPersistence): UserEventsPersistence
+
+    @Binds
+    internal abstract fun chatEvents(implementation: InMemoryChatEventPersistence): ChatEventPersistence
 }

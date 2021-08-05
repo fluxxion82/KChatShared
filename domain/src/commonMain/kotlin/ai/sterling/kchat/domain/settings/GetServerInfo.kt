@@ -14,5 +14,4 @@ class GetServerInfo @Inject constructor(
     override suspend fun invoke(param: Unit): Flow<ServerInfo> = channelFlow {
         send(repository.getServerInfo())
     }
-
 }

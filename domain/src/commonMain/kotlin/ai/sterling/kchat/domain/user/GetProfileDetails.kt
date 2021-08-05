@@ -7,12 +7,10 @@ import ai.sterling.kchat.domain.user.persistences.UserEventsPersistence
 import ai.sterling.kchat.domain.user.persistences.UserRepository
 import ai.sterling.kinject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 
-@Suppress("TooGenericExceptionCaught")
 class GetProfileDetails @Inject constructor(
     private val repository: UserRepository,
     private val eventsPersistence: UserEventsPersistence
@@ -22,8 +20,6 @@ class GetProfileDetails @Inject constructor(
         eventsPersistence.events().consumeAsFlow()
             .mapNotNull { (it as? UserEvent.DetailsChanged)?.details }
             .onStart {
-                repository.getUserProfile().collect {
-                    emit(it)
-                }
+                repository.getUserProfile()
             }
 }
