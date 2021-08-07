@@ -5,7 +5,7 @@ Pod::Spec.new do |spec|
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = 'Working with AFNetworking from Kotlin/Native using CocoaPods'
+    spec.summary                  = 'Multicore CocoaPods dependencies'
 
     spec.static_framework         = true
     spec.vendored_frameworks      = "build/cocoapods/framework/multicore.framework"
@@ -34,7 +34,7 @@ Pod::Spec.new do |spec|
             :script => <<-SCRIPT
                 set -ev
                 REPO_ROOT="$PODS_TARGET_SRCROOT"
-                "$REPO_ROOT/../../KChatAndroid/gradlew" -p "$REPO_ROOT" :multicore:syncFramework \
+                "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" :multicore:syncFramework \
                     -Pkotlin.native.cocoapods.target=$KOTLIN_TARGET \
                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION \
                     -Pkotlin.native.cocoapods.cflags="$OTHER_CFLAGS" \

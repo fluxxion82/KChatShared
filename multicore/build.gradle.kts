@@ -19,42 +19,56 @@ kotlin {
     // Add a platform switching to have an IDE support.
     val buildForDevice = project.findProperty("kotlin.native.cocoapods.target") == "ios_arm"
     if (buildForDevice) {
-        iosArm64("iOS64")
-        iosArm32("iOS32")
+        iosArm64("ios64")
+        iosArm32("ios32")
 
         val iOSMain by sourceSets.creating
-        sourceSets["iOS64Main"].dependsOn(iOSMain)
-        sourceSets["iOS32Main"].dependsOn(iOSMain)
+        sourceSets["ios64Main"].dependsOn(iOSMain)
+        sourceSets["ios32Main"].dependsOn(iOSMain)
     } else {
-        iosX64("iOS")
+        iosX64("ios")
     }
 
     jvm()
 
-    sourceSets["commonMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-    }
-    sourceSets["commonTest"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-test-common")
-        implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
-    }
-    sourceSets["iOSMain"].dependencies {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-test-common")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.21")
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-test")
+                implementation("org.jetbrains.kotlin:kotlin-test-junit")
+            }
+        }
+        val iosMain by getting {
+            dependencies {
 
-    }
-    sourceSets["iOSTest"].dependencies {
+            }
+        }
+        val iosTest by getting {
+            dependencies {
 
-    }
-    sourceSets["jvmMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    }
-    sourceSets["jvmTest"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-test")
-        implementation("org.jetbrains.kotlin:kotlin-test-junit")
+            }
+        }
     }
 
     cocoapods {
         // Configure fields required by CocoaPods.
-        summary = "Working with AFNetworking from Kotlin/Native using CocoaPods"
+        summary = "Multicore CocoaPods dependencies"
         homepage = "https://github.com/JetBrains/kotlin-native"
 
         ios.deploymentTarget = "13.5"
