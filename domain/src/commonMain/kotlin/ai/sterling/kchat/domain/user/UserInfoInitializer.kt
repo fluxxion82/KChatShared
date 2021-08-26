@@ -20,10 +20,12 @@ internal class UserInfoInitializer @Inject constructor(
 
     override suspend fun initialize() {
         scopeFacade.globalScope.launch {
-            getAppUser(userPreferences.getServerInfo().username)
-                .collect {
-                    notifyAll(it)
-                }
+            userPreferences.getServerInfo().username?.let { userName ->
+                getAppUser(userName)
+                    .collect {
+                        notifyAll(it)
+                    }
+            }
         }
     }
 

@@ -8,8 +8,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:1.5.20")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:1.5.21")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
         classpath("org.jmailen.gradle:kotlinter-gradle:3.2.0")
         // classpath("co.touchlab:kotlinnativecocoapods:0.12")
@@ -32,11 +32,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21")
 
     implementation("org.jmailen.gradle:kotlinter-gradle:3.2.0")
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.0")
 }
 
 java {

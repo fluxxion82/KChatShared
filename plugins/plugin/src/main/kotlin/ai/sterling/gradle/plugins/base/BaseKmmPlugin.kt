@@ -101,8 +101,8 @@ open class BaseKmmPlugin : Plugin<Project> {
     }
 
     companion object {
-        private const val kotlinVersion = "1.5.10"
-        private const val daggerVersion = "2.35.1"
+        private const val kotlinVersion = "1.5.21"
+        private const val daggerVersion = "2.38.1"
         private const val coroutinesVersion = "1.5.0"
     }
 }

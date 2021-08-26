@@ -18,6 +18,7 @@ internal class InMemoryUserEventsPersistence @Inject constructor(
     override fun events(): ReceiveChannel<UserEvent> = channel.openSubscription()
 
     override suspend fun update(event: UserEvent) = withContext(contextFacade.default) {
+        println("update, event: $event")
         channel.send(event)
     }
 }

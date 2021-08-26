@@ -1,6 +1,6 @@
 package ai.sterling.kchat.domain.chat.model
 
-data class Message (
+data class Message(
     val id: String,
     val text: String,
     val payload: String,

@@ -6,9 +6,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
 
 @Singleton
-internal class InMemoryForegroundEventPersistence @Inject constructor() :
-    ForegroundEventPersistence {
-
+internal class InMemoryForegroundEventPersistence @Inject constructor() : ForegroundEventPersistence {
     private val foregroundEvent = ConflatedBroadcastChannel<Boolean>()
 
     override fun getForegroundEvent(): ReceiveChannel<Boolean> = foregroundEvent.openSubscription()

@@ -10,7 +10,10 @@ class UpdateServerInfo @Inject constructor(
 ) : Usecase<ServerInfo, Boolean> {
 
     override suspend fun invoke(param: ServerInfo): Boolean {
-        if (param.username.isEmpty() || param.serverIP.isEmpty() || param.serverPort == 0) {
+        if (param.username?.isEmpty() == true ||
+            param.serverIP?.isEmpty() == true ||
+            param.serverPort == 0
+        ) {
             return false
         }
         preferences.upsert(param)

@@ -15,7 +15,7 @@ class LoginUser @Inject constructor(
     private val getUserState: GetUserState
 ) : Usecase<LoginUser.LoginData, UserState> {
 
-    data class LoginData(val username: String)
+    data class LoginData(val username: String?)
 
     override suspend fun invoke(param: LoginData): UserState {
         if (param.username.isNullOrEmpty()) {

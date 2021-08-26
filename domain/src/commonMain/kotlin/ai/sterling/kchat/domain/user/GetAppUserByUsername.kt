@@ -3,8 +3,8 @@ package ai.sterling.kchat.domain.user
 import ai.sterling.kchat.domain.base.Usecase
 import ai.sterling.kchat.domain.user.models.AppUser
 import ai.sterling.kchat.domain.user.models.UserEvent
-import ai.sterling.kchat.domain.user.persistences.UserRepository
 import ai.sterling.kchat.domain.user.persistences.UserEventsPersistence
+import ai.sterling.kchat.domain.user.persistences.UserRepository
 import ai.sterling.kinject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.consumeAsFlow

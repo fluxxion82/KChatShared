@@ -33,7 +33,7 @@ class KLoggerTest {
             verify(it).log(
                 Logger.Priority.DEBUG,
                 null,
-                "KLoggerTest#properTagIsGeneratedWhenLoggedFromTest:33",
+                "KLoggerTest#properTagIsGeneratedWhenLoggedFromTest:31",
                 "msg",
                 null,
                 null
@@ -48,7 +48,7 @@ class KLoggerTest {
             verify(it).log(
                 Logger.Priority.DEBUG,
                 null,
-                "SomeClass#doLog:77",
+                "SomeClass#doLog:76",
                 "msg",
                 null,
                 null
@@ -63,7 +63,7 @@ class KLoggerTest {
             verify(it).log(
                 Logger.Priority.DEBUG,
                 null,
-                "TwinLoggerTest\$InnerClass#doLog:13",
+                "KLoggerTest\$InnerClass#doLog:12",
                 "msg",
                 null,
                 null

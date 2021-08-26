@@ -4,7 +4,13 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-data class ChatMessage(val id: Int, val username: String, val type: Int, var message: String, val date: Long) {
+data class ChatMessage(
+    val id: Int,
+    val username: String,
+    val type: Int,
+    var message: String,
+    val date: Long
+) {
 
     override fun toString(): String {
         return when (type) {
@@ -12,24 +18,28 @@ data class ChatMessage(val id: Int, val username: String, val type: Int, var mes
                 message = "$username \n just joined"
                 message
             }
-
             LOGOUT -> {
                 message = "$username \n has logged out"
                 message
             }
-
             REPLY, MESSAGE -> {
                 val date = Instant.fromEpochMilliseconds(date).toLocalDateTime(TimeZone.currentSystemDefault())
                 val min = if (date.minute < TEN_MIN) "0${date.minute}" else date.minute
 
                 val time = """
                     ${
-                    when {
-                        date.hour == 0 -> date.hour + TWELVE_HRS
-                        date.hour > TWELVE_HRS -> date.hour - TWELVE_HRS
-                        else -> date.hour
-                    }
-                }:${min} ${if (date.hour >= TWELVE_HRS) { "PM" } else { "AM" }}
+                when {
+                    date.hour == 0 -> date.hour + TWELVE_HRS
+                    date.hour > TWELVE_HRS -> date.hour - TWELVE_HRS
+                    else -> date.hour
+                }
+                }:$min ${
+                if (date.hour >= TWELVE_HRS) {
+                    "PM"
+                } else {
+                    "AM"
+                }
+                }
                 """.trimIndent()
 
                 """

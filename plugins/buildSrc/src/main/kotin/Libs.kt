@@ -1,5 +1,5 @@
 object Libs {
-    private const val kotlinVersion = "1.5.10"
+    private const val kotlinVersion = "1.5.21"
     private const val coroutinesVersion = "1.5.0"
     private const val detektVersion = "1.17.1"
 

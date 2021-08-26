@@ -113,7 +113,7 @@ abstract class BaseAndroidPlugin : BasePlugin() {
         private const val COMPILE_SDK_VERSION = 30
         private const val MIN_SDK_VERSION = 24
 
-        private const val daggerVersion = "2.37"
+        private const val daggerVersion = "2.38.1"
         private const val coroutinesVersion = "1.5.0"
         private const val espressoVersion = "3.1.1"
     }

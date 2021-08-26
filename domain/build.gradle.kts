@@ -5,8 +5,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:1.5.20")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:1.5.21")
     }
 }
 
@@ -60,6 +60,9 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-test-common")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
+                // mockk doesn't work on kotlin native yet...
+//                implementation("io.mockk:mockk-common:1.12.0")
+//                implementation("io.mockk:mockk:1.12.0")
             }
         }
         val jvmMain by getting {
@@ -69,13 +72,14 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
                 implementation(project(":logging:logger"))
 
-                implementation("com.google.dagger:dagger:2.37")
+                implementation("com.google.dagger:dagger:2.38.1")
             }
         }
         val jvmTest by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-test")
                 implementation("org.jetbrains.kotlin:kotlin-test-junit")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
 
                 implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
                 implementation("org.mockito:mockito-core:3.9.0")
@@ -84,7 +88,17 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.8")
+//                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native") {
+//                    version {
+//                        strictly("1.3.3-native-mt")
+//                    }
+//                }
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt") {
+                    version {
+                        strictly("1.5.1-native-mt")
+                    }
+                }
             }
         }
         val iosTest by getting {

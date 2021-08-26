@@ -9,7 +9,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.withContext
 
 @Singleton
-class InMemoryChatEventPersistence @Inject constructor(
+internal class InMemoryChatEventPersistence @Inject constructor(
     private val contextFacade: CoroutinesContextFacade
 ) : ChatEventPersistence {
     private val channel = ConflatedBroadcastChannel<ChatEvent>()
