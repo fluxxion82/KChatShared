@@ -1,5 +1,3 @@
-//apply(from = "agp_compat.gradle.kts")
-
 buildscript {
     repositories {
         google()

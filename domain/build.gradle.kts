@@ -38,6 +38,7 @@ kotlin {
     }
 
     jvm()
+
     sourceSets {
         all {
             languageSettings.apply {
@@ -50,7 +51,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
                 implementation(project(":kinject"))
@@ -88,17 +89,11 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-//                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native") {
+//                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt") {
 //                    version {
-//                        strictly("1.3.3-native-mt")
+//                        strictly("1.5.1-native-mt")
 //                    }
 //                }
-
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt") {
-                    version {
-                        strictly("1.5.1-native-mt")
-                    }
-                }
             }
         }
         val iosTest by getting {

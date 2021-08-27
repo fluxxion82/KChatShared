@@ -6,7 +6,7 @@ import ai.sterling.logging.Logger.Priority
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-@Suppress("NOTHING_TO_INLINE")
+@Suppress("NOTHING_TO_INLINE", "TooManyFunctions")
 object KLogger {
 
     private const val CALL_STACK_INDEX = 3 // Depth of `buildTag` method
@@ -257,8 +257,10 @@ object KLogger {
     }
 
     private fun inferTag(): String =
-        Throwable().stackTrace
-            .getOrElse(CALL_STACK_INDEX) { throw IllegalStateException("Synthetic stacktrace didn't have enough elements") }
+        Throwable("KLogger Error").stackTrace
+            .getOrElse(CALL_STACK_INDEX) {
+                throw IllegalStateException("Synthetic stacktrace didn't have enough elements")
+            }
             .let {
                 val className =
                     ANONYMOUS_CLASS_PATTERN.matcher(it.className)

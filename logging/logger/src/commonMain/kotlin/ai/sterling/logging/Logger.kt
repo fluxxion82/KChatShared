@@ -9,6 +9,7 @@ interface Logger {
      * [message] Optional message passed to logged event
      * [throwable] Optional error information attached to logged event
      */
+    @Suppress("LongParameterList")
     fun log(
         priority: Priority,
         explicitTag: String?,

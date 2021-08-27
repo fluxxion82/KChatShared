@@ -23,7 +23,9 @@ abstract class DomainModule {
     internal abstract fun scopeFacade(implementation: DefaultScopeFacade): CoroutineScopeFacade
 
     @Binds
-    internal abstract fun foregroundEvent(implementation: InMemoryForegroundEventPersistence): ForegroundEventPersistence
+    internal abstract fun foregroundEvent(
+        implementation: InMemoryForegroundEventPersistence
+    ): ForegroundEventPersistence
 
     @Binds
     internal abstract fun userEvents(implementation: InMemoryUserEventsPersistence): UserEventsPersistence

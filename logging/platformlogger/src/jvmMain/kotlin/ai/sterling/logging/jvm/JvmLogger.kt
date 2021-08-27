@@ -7,6 +7,7 @@ import java.util.logging.Logger as JavaLog
 object JvmLogger : Logger {
     private val anonLogger = JavaLog.getAnonymousLogger()
 
+    @Suppress("ComplexMethod")
     override fun log(
         priority: Logger.Priority,
         explicitTag: String?,
